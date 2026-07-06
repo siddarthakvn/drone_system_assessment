@@ -1,0 +1,54 @@
+car_simulator:
+  ros__parameters:
+    publish_rate_hz: 20.0
+    path_radius_m: 12.0
+    path_center_x_m: 0.0
+    path_center_y_m: 0.0
+    path_angular_speed_radps: 0.2
+    frame_id: map
+    model_name: car
+    model_z_m: 0.05
+
+follower_node:
+  ros__parameters:
+    follow_offset_x_m: -6.0
+    follow_offset_y_m: 0.0
+    follow_altitude_m: 20.0
+    car_position_timeout_s: 0.2
+    max_position_jump_m: 5.0
+    frame_id: map
+
+drone_manager:
+  ros__parameters:
+    arm_failures_before_success: 0
+    arm_retry_limit: 3
+    arm_retry_period_s: 1.0
+    takeoff_altitude_m: 20.0
+    climb_rate_mps: 2.0
+    tracking_gain: 0.15
+    control_period_s: 0.05
+    frame_id: map
+    model_name: drone
+    spawn_altitude_m: 0.25
+
+px4_manager:
+  ros__parameters:
+    system_address: udpin://0.0.0.0:14540
+    arm_retry_limit: 3
+    arm_retry_period_s: 1.0
+    takeoff_altitude_m: 20.0
+    control_period_s: 0.05
+    takeoff_reached_tolerance_m: 0.75
+    pre_arm_delay_s: 2.0
+    frame_id: map
+    default_yaw_deg: 0.0
+
+health_monitor:
+  ros__parameters:
+    rtf_warning_threshold: 0.8
+    rtf_warning_interval_s: 5.0
+
+telemetry_recorder:
+  ros__parameters:
+    sample_rate_hz: 10.0
+    run_name: ""

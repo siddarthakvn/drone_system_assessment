@@ -1,0 +1,21 @@
+--- a/Tools/simulation/gazebo-classic/sitl_gazebo-classic/CMakeLists.txt
++++ b/Tools/simulation/gazebo-classic/sitl_gazebo-classic/CMakeLists.txt
+@@ -36,7 +36,7 @@ include(GNUInstallDirs)
+ ## Find Dependencies ##
+ #######################
+ 
+-option(BUILD_GSTREAMER_PLUGIN "enable gstreamer plugin" ON)
++option(BUILD_GSTREAMER_PLUGIN "enable gstreamer plugin" OFF)
+ option(BUILD_ROS2_PLUGINS "Enable building ROS2 dependent plugins" OFF)
+ option(GENERATE_ROS_MODELS "Generate model sdf for ROS environment" OFF)
+ option(BUILD_USER_CAMERA_PLUGIN "Enable Gazebo user camera plugin" OFF)
+--- a/src/modules/simulation/simulator_mavlink/sitl_targets_gazebo-classic.cmake
++++ b/src/modules/simulation/simulator_mavlink/sitl_targets_gazebo-classic.cmake
+@@ -48,6 +48,7 @@ if(gazebo_FOUND)
+ 		SOURCE_DIR ${PX4_SOURCE_DIR}/Tools/simulation/gazebo-classic/sitl_gazebo-classic
+ 		CMAKE_ARGS
+ 			-DCMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX}
++			-DBUILD_GSTREAMER_PLUGIN=OFF
+ 			-DSEND_ODOMETRY_DATA=ON
+ 			-DGENERATE_ROS_MODELS=ON
+ 		BINARY_DIR ${PX4_BINARY_DIR}/build_gazebo-classic

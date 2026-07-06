@@ -1,0 +1,36 @@
+name: Integration Test
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+  workflow_dispatch:
+
+jobs:
+  integration:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 120
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build Docker image
+        run: docker build -t drone-system-integration .
+
+      - name: Run integration test
+        run: |
+          docker run --rm \
+            -e INTEGRATION_DURATION_S=60 \
+            -e ROS_DOMAIN_ID=71 \
+            -v "${{ github.workspace }}/ci-artifacts:/workspace/artifacts" \
+            drone-system-integration
+
+      - name: Upload run artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: integration-run-artifacts
+          path: ci-artifacts/run_*/
+          if-no-files-found: warn

@@ -1,0 +1,12 @@
+.git
+.venv
+build
+install
+log
+artifacts
+ci-artifacts
+plots
+__pycache__
+*.pyc
+external/PX4-Autopilot/build
+external/PX4-Autopilot/log

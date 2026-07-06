@@ -1,0 +1,12 @@
+numpy
+pandas
+matplotlib
+mavsdk
+kconfiglib
+pyros-genmsg
+empy
+jinja2
+packaging
+pyserial
+pyyaml
+jsonschema
