@@ -1,7 +1,13 @@
 #!/usr/bin/env bash
-set -euo pipefail
+set -eo pipefail
 
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+
+source_ros() {
+  set +u
+  # shellcheck disable=SC1090,SC1091
+  source "$1"
+}
 cd "${REPO_ROOT}"
 
 DURATION_S="${INTEGRATION_DURATION_S:-60}"
@@ -14,10 +20,10 @@ fi
 
 # shellcheck disable=SC1091
 source "${REPO_ROOT}/.venv/bin/activate"
-source /opt/ros/humble/setup.bash
+source_ros /opt/ros/humble/setup.bash
 python3 -m pip install -r requirements.txt
 python3 -m colcon build --packages-select drone_system
-source install/setup.bash
+source_ros install/setup.bash
 
 export ROS_DOMAIN_ID
 export HEADLESS=1

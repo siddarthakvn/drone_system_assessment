@@ -1,7 +1,13 @@
 #!/usr/bin/env bash
-set -euo pipefail
+set -eo pipefail
 
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+
+source_ros() {
+  set +u
+  # shellcheck disable=SC1090,SC1091
+  source "$1"
+}
 PX4_ROOT="${REPO_ROOT}/external/PX4-Autopilot"
 VENV="${REPO_ROOT}/.venv"
 
@@ -38,8 +44,7 @@ apply_patch() {
 apply_patch "${REPO_ROOT}/patches/px4-gazebo-classic-build.patch"
 
 echo "[bootstrap_px4] building PX4 SITL + Gazebo Classic (no launch)..."
-# shellcheck disable=SC1091
-source /opt/ros/humble/setup.bash
+source_ros /opt/ros/humble/setup.bash
 export ROS_VERSION=2
 make px4_sitl gazebo-classic_iris DONT_RUN=1
 
